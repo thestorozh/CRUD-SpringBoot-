@@ -1,13 +1,11 @@
 package com.storozh.SpringExample.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class StudentDTO {
-	
     private Integer id;
     private String firstname;
     private String lastname;
-}
+    private String middlename;	
+	}
