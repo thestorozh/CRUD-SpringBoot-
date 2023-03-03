@@ -20,7 +20,7 @@ public class StudentService {
 
     public Student createStudent(StudentDTO studentDTO) {
         Student student = new Student(studentDTO.getFirstname(), studentDTO.getLastname(), studentDTO.getMiddlename());
-        studentRepository.save(student);
+        student = studentRepository.save(student);
         LOG.info("Student with ID {} is created", student.getId());
         return student;
     }
@@ -37,7 +37,7 @@ public class StudentService {
                 .lastname(studentDTO.getLastname())
                 .middlename(studentDTO.getMiddlename())
                 .build();
-            studentRepository.save(student);
+            student = studentRepository.save(student);
             LOG.info("Student with ID {} is updated", id);
             return student;
         } else {

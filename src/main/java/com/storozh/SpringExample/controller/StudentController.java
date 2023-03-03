@@ -17,8 +17,9 @@ public class StudentController {
 
     @PostMapping
     public StudentDTO create(@RequestBody StudentDTO studentDTO) {
-        studentService.createStudent(studentDTO);
-        return studentDTO;
+        Student student = studentService.createStudent(studentDTO);
+        StudentDTO studentResponseDTO = new StudentDTO(student.getId(),student.getFirstname(), student.getLastname(), student.getMiddlename());
+        return studentResponseDTO;
     }
 
     @GetMapping
@@ -32,7 +33,8 @@ public class StudentController {
         if (student == null) {
             throw new RuntimeException("Student not found with id " + id);
         }
-        return studentDTO;
+        StudentDTO studentResponseDTO = new StudentDTO(student.getId(),student.getFirstname(), student.getLastname(), student.getMiddlename());
+        return studentResponseDTO;
     }
 
     @DeleteMapping("/delete/{id}")
