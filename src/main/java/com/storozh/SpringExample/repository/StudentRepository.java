@@ -7,5 +7,5 @@ import com.storozh.SpringExample.model.Student;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, String> {
-	Optional<Student> findById(Long id);
-	}
+    Optional<Student> findById(Long id);
+}

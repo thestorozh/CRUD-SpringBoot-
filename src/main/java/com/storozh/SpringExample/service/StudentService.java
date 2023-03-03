@@ -1,6 +1,6 @@
 package com.storozh.SpringExample.service;
 
-import com.storozh.SpringExample.DTO.StudentDTO;	
+import com.storozh.SpringExample.DTO.StudentDTO;
 import com.storozh.SpringExample.model.Student;
 import com.storozh.SpringExample.repository.StudentRepository;
 import org.slf4j.Logger;
@@ -12,22 +12,18 @@ import java.util.Optional;
 
 @Service
 public class StudentService {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(StudentService.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(StudentService.class);
 
     @Autowired
     private StudentRepository studentRepository;
 
     public Student createStudent(StudentDTO studentDTO) {
-        Student student = new Student();
-        student.setFirstname(studentDTO.getFirstname());
-        student.setLastname(studentDTO.getLastname());
-        student.setMiddlename(studentDTO.getMiddlename());
+        Student student = new Student(studentDTO.getFirstname(), studentDTO.getLastname(), studentDTO.getMiddlename());
         studentRepository.save(student);
         LOG.info("Student with ID {} is created", student.getId());
         return student;
     }
-
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
@@ -36,9 +32,11 @@ public class StudentService {
         Optional<Student> optionalStudent = studentRepository.findById(id);
         if (optionalStudent.isPresent()) {
             Student student = optionalStudent.get();
-            student.setFirstname(studentDTO.getFirstname());
-            student.setLastname(studentDTO.getLastname());
-            student.setMiddlename(studentDTO.getMiddlename());
+            student = student.toBuilder()
+                .firstname(studentDTO.getFirstname())
+                .lastname(studentDTO.getLastname())
+                .middlename(studentDTO.getMiddlename())
+                .build();
             studentRepository.save(student);
             LOG.info("Student with ID {} is updated", id);
             return student;
@@ -46,12 +44,13 @@ public class StudentService {
             return null;
         }
     }
-  
+
     public boolean deleteStudentById(Long id) {
         Optional<Student> optionalStudent = studentRepository.findById(id);
         if (optionalStudent.isPresent()) {
             Student student = optionalStudent.get();
             studentRepository.delete(student);
+            LOG.info("Student with ID {} deleted successfully", id);
             return true;
         } else {
             return false;

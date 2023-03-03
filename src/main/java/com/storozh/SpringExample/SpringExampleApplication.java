@@ -8,12 +8,11 @@ import org.slf4j.LoggerFactory;
 
 @SpringBootApplication
 public class SpringExampleApplication {
-	
-	private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
-	
-	public static void main(String[] args) {
-		SpringApplication.run(SpringExampleApplication.class, args);
-		LOG.info("Application started");
-	}
 
+    private static final Logger LOG = LoggerFactory.getLogger(StudentController.class);
+
+    public static void main(String[] args) {
+        SpringApplication.run(SpringExampleApplication.class, args);
+        LOG.info("Application started");
+    }
 }

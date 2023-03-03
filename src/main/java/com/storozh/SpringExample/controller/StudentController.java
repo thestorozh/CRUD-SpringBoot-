@@ -9,16 +9,16 @@ import java.util.List;
 import com.storozh.SpringExample.service.StudentService;
 
 @RestController
-@RequestMapping(value="/api/student")
+@RequestMapping("/api/student")
 public class StudentController {
 
     @Autowired
     StudentService studentService;
 
     @PostMapping
-    public String create(@RequestBody StudentDTO studentDTO) {
+    public StudentDTO create(@RequestBody StudentDTO studentDTO) {
         studentService.createStudent(studentDTO);
-        return "Student is created";
+        return studentDTO;
     }
 
     @GetMapping
@@ -27,12 +27,12 @@ public class StudentController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody StudentDTO studentDTO) {
+    public StudentDTO updateStudent(@PathVariable Long id, @RequestBody StudentDTO studentDTO) {
         Student student = studentService.updateStudent(id, studentDTO);
         if (student == null) {
-            return ResponseEntity.notFound().build();
+            throw new RuntimeException("Student not found with id " + id);
         }
-        return ResponseEntity.ok(student);
+        return studentDTO;
     }
 
     @DeleteMapping("/delete/{id}")
@@ -41,9 +41,7 @@ public class StudentController {
         if (success) {
             return ResponseEntity.ok("Student with ID " + id + " deleted successfully");
         } else {
-            return ResponseEntity.notFound().build();
+            throw new RuntimeException("Student not found with id " + id);
         }
     }
 }
-
-
