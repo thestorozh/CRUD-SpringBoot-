@@ -16,10 +16,9 @@ public class StudentController {
     StudentService studentService;
 
     @PostMapping
-    public StudentDTO create(@RequestBody StudentDTO studentDTO) {
+    public Student create(@RequestBody StudentDTO studentDTO) {
         Student student = studentService.createStudent(studentDTO);
-        StudentDTO studentResponseDTO = new StudentDTO(student.getId(),student.getFirstname(), student.getLastname(), student.getMiddlename());
-        return studentResponseDTO;
+        return student;
     }
 
     @GetMapping
@@ -28,13 +27,12 @@ public class StudentController {
     }
 
     @PutMapping("/update/{id}")
-    public StudentDTO updateStudent(@PathVariable Long id, @RequestBody StudentDTO studentDTO) {
+    public Student updateStudent(@PathVariable Long id, @RequestBody StudentDTO studentDTO) {
         Student student = studentService.updateStudent(id, studentDTO);
         if (student == null) {
             throw new RuntimeException("Student not found with id " + id);
         }
-        StudentDTO studentResponseDTO = new StudentDTO(student.getId(),student.getFirstname(), student.getLastname(), student.getMiddlename());
-        return studentResponseDTO;
+        return student;
     }
 
     @DeleteMapping("/delete/{id}")

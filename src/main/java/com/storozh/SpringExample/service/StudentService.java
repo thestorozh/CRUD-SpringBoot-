@@ -20,9 +20,9 @@ public class StudentService {
 
     public Student createStudent(StudentDTO studentDTO) {
         Student student = new Student(studentDTO.getFirstname(), studentDTO.getLastname(), studentDTO.getMiddlename());
-        student = studentRepository.save(student);
         LOG.info("Student with ID {} is created", student.getId());
-        return student;
+        return studentRepository.save(new Student(studentDTO.getFirstname(), studentDTO.getLastname(), studentDTO.getMiddlename()));
+
     }
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
